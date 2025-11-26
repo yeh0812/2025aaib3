@@ -1,0 +1,29 @@
+//week12-4.cpp
+//LeetCode 43. Multiply Strings
+class Solution {
+public:
+    string multiply(string num1, string num2) {
+        if(num1=="0" || num2=="0")return "0";
+
+        int N1 = num1.length(), N2 = num2.length();
+        int N = N1 + N2;
+        vector<int>ans(N);//伸縮自如的陣列
+        for(int i=N1-1; i>=0; i--){//逐項相乘
+            for(int j=N2-1; j>=0; j--){
+                //nums1[i]乘nums2[j]會放到ans[i+j+1]
+                ans[i+j+1] += (num1[i]-'0') * (num2[j]-'0');
+                if(ans[i+j+1]>9){
+                    ans[i+j] += ans[i+j+1]/10;
+                    ans[i+j+1] = ans[i+j+1]%10;
+                }
+            }
+        }
+        string strAns = "";
+        if(ans[0]==0){
+            for(int i=1; i<N; i++)strAns += (char)(ans[i]+'0');
+        }else{
+            for(int i=0; i<N; i++) strAns += (char)(ans[i]+'0');
+        }
+        return strAns;
+    }
+};
